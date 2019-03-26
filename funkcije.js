@@ -1,0 +1,102 @@
+class KoordinatniSistem {
+    constructor(mjerna){
+        this.mjerna = mjerna;
+        this.duzinaX = width;
+        this.duzinaY = height;
+        this.X = [];
+        this.Y = [];
+        this.brojac = 0;
+        this.ime = ["A","B","C","D","E","F","G"
+        ,"I","J","K","L","M","N","P","Q","R"
+        ,"S","T","U","V","W","X","Y","Z"];
+    }
+    nacrtaj(bool) {
+        textSize(11);
+        textStyle(ITALIC);
+        textAlign(CENTER,CENTER);
+        fill(0);
+        strokeWeight(1);
+        line(this.duzinaX/2,this.duzinaX,this.duzinaX/2,0);
+        line(0,this.duzinaY/2,this.duzinaY,this.duzinaY/2);
+        text("0",307,309);
+
+        let i = 0;
+        let texts = 1;
+        while (i < this.duzinaX/2){
+            line(this.duzinaX/2 - this.mjerna-i,305,this.duzinaX/2 - this.mjerna-i,295);
+            text(-texts,this.duzinaX/2-this.mjerna-i, this.duzinaY/2+22);
+
+            line(this.duzinaX/2 + this.mjerna+i,305,this.duzinaX/2 + this.mjerna+i,295);
+            text(texts,this.duzinaX/2+this.mjerna+i, this.duzinaY/2+22);
+
+            line(305,300-this.mjerna-i,295,300-this.mjerna-i);
+            text(texts,this.duzinaY/2-20,this.duzinaX/2-this.mjerna-i+1);
+
+            line(305,300+this.mjerna+i,295,300+this.mjerna+i);
+            text(-texts, this.duzinaY/2-20, this.duzinaX/2+this.mjerna+i+2);
+
+            i += this.mjerna;
+            texts++;
+        }
+        if (bool){
+            textSize(16);
+            text("x",590,285);
+            text("y",320,10);
+            text("I(+,+)",550,35);
+            text("II(-,+)",50,35);
+            text("III(-,-)",50,600-35);
+            text("IV(+,-)",550,600-35);
+        }
+    }
+    mojText(x,y){
+        let ix = 0;
+        let iy = 0;
+        if (x > 0 && y > 0) {
+            ix = 15;
+            iy = ix;
+        }else if (x < 0 && y > 0){
+            ix = -10;
+            iy = 15;
+        }else if (x > 0 && y < 0){
+            ix = 10;
+            iy = -15;
+        }else if (x < 0 && y < 0){
+            ix = -15;
+            iy = ix;
+        }else{
+            ix = -20
+            iy = 15
+        }
+        text(`${this.ime[this.brojac]}(${x},${y})`,this.X[this.brojac]+ix,this.Y[this.brojac]-iy);
+    }
+    tacka(x,y,bool = true){
+        fill(0);
+        textSize(13);
+        textStyle(BOLD);
+        textAlign(CENTER,CENTER);
+        strokeWeight(2);
+        this.X[this.brojac] = x*this.mjerna+300;
+        this.Y[this.brojac] = y*-this.mjerna+300;
+        circle(this.X[this.brojac],this.Y[this.brojac],1);
+        if (bool) {
+            this.mojText(x,y);
+        }
+        strokeWeight(0.4);
+        line(300+x*this.mjerna,height/2,x*this.mjerna+300,y*-this.mjerna+300);
+        line(300,300-y*this.mjerna,x*this.mjerna+300,y*-this.mjerna+300);
+        this.brojac += 1;
+    }
+    krajnjaTacka(){
+        strokeWeight(1.7);
+        line(this.X[(this.X).length-1],this.Y[(this.X).length-1],this.X[0],this.Y[0])
+    }
+    povezi(bool){
+        strokeWeight(1.7);
+        if (bool){
+            this.krajnjaTacka();
+        }
+        for(let i = 0; i < (this.X).length-1; i++){
+            line(this.X[i],this.Y[i],this.X[i+1],this.Y[i+1])
+        }
+    }
+}
