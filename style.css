@@ -1,0 +1,41 @@
+fieldset {
+  width: 0px
+}
+
+input {
+  width: 600px;
+}
+
+body {
+  margin: 10px;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+}
+
+div {
+  padding-bottom: 5px;
+}
+
+div > button {
+  color: black;
+  display: block;
+  width: 602px;
+  background-color: 244 244 244;
+  padding: 0px;
+  font-size: 20px;
+  cursor: pointer;
+  text-align: center;
+}
+
+canvas {
+  border-style: solid;
+  border-width: thin;
+  border-color: grey;
+}
+
+@media screen and (max-width: 600px) {
+  body {
+    align-items: baseline;
+  }
+}
