@@ -8,8 +8,4 @@ function setup(){
 function draw(){
     ks.nacrtaj();
     ks.zoom();
-    ks.tacka(5,5)
-    ks.tacka(-5,5)
-    ks.tacka(-5,-5)
-    ks.tacka(5,-5)
 }

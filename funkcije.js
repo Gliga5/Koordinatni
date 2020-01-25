@@ -87,10 +87,20 @@ class KoordinatniSistem {
         for(let i = 0; i < this.govno; i++){
           this.tacka(this.x[i],this.y[i]);
           if (this.tata == 1) {
-            this.povezi(true);
+            if (document.getElementById("id3").value == "1") {
+              ks.povezi(true);
+            }else {
+              ks.povezi(false);
+            }
           }
         }
       }
+      document.getElementById("gg").innerHTML = ` ${this.ime[this.brojac]} (`
+    }
+    tackaunos() {
+      let XX = parseInt(document.getElementById("id1").value);
+      let YY = parseInt(document.getElementById("id2").value);
+      this.tacka(XX,YY);
     }
     tacka(x,y,bool = true,funkcija=true){
         fill(0);

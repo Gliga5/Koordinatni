@@ -11,11 +11,29 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <fieldset>
+    <fieldset class="ssa">
       <legend>Opcije</legend>
-      <div>
-        <input type="checkbox" name="povezi" value="povezi" onmousedown="ks.tata*=-1"><br>
+      <div class="abc">
+        <label id="gg">Unesi tacku: A (</label>
+        <input placeholder="X" type="text" id="id1" />
+        <label>,</label>
+        <input placeholder="Y" type="text" id="id2" />
+        <label>)</label><br>
+        <input class="submitara" type="button" value="Unesi" onclick="
+        ks.tackaunos();
+        document.getElementById('id1').value = '';
+        document.getElementById('id2').value = '';">
+        <hr>
+        <label>Povezi tacke?</label>
+        <input type="checkbox" name="povezi" class="povezi" value="povezi" onmousedown="ks.tata*=-1;" />
+          <select id="id3">
+            <option value="1">Sve</option>
+            <option value="2">Sve osim zadnje dvije tacke</option>
+          </select>
       </div>
+    </fieldset>
+    <fieldset>
+      <legend>Zoom</legend>
       <div>
         <input type="range" id="myRange" value="30" min="15" max="100">
       </div>

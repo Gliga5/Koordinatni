@@ -2,8 +2,24 @@ fieldset {
   width: 0px
 }
 
+.ssa {
+  width: 600px;
+}
+
 input {
   width: 600px;
+}
+
+.abc input {
+  width: 30px
+}
+
+.abc .submitara {
+  width: 50px
+}
+
+.abc {
+  padding-top: 5px
 }
 
 body {
@@ -38,4 +54,8 @@ canvas {
   body {
     align-items: baseline;
   }
+}
+
+input[type=checkbox] {
+  -webkit-transform: scale(1.3);
 }
