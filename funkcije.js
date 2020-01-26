@@ -27,22 +27,31 @@ class KoordinatniSistem {
         text("0",307,309);
 
         let i = 0;
-        let texts = 1;
-        while (i < this.duzinaX/2){
-            line(this.duzinaX/2 - this.mjerna-i,305,this.duzinaX/2 - this.mjerna-i,295);
-            text(-texts,this.duzinaX/2-this.mjerna-i, this.duzinaY/2+22);
+        let texts = 0;
+        while (i < this.duzinaX/2+1){
+            line(this.duzinaX/2 - this.mjerna/i-i,305,this.duzinaX/2 - this.mjerna/i-i,295);
+            text(-texts,this.duzinaX/2-this.mjerna/i-i, this.duzinaY/2+22);
 
-            line(this.duzinaX/2 + this.mjerna+i,305,this.duzinaX/2 + this.mjerna+i,295);
-            text(texts,this.duzinaX/2+this.mjerna+i, this.duzinaY/2+22);
+            line(this.duzinaX/2 + this.mjerna/i+i,305,this.duzinaX/2 + this.mjerna/i+i,295);
+            text(texts,this.duzinaX/2+this.mjerna/i+i, this.duzinaY/2+22);
 
-            line(305,300-this.mjerna-i,295,300-this.mjerna-i);
-            text(texts,this.duzinaY/2-20,this.duzinaX/2-this.mjerna-i+1);
+            line(305,300-this.mjerna/i-i,295,300-this.mjerna/i-i);
+            text(texts,this.duzinaY/2-20,this.duzinaX/2-this.mjerna/i-i+1);
 
-            line(305,300+this.mjerna+i,295,300+this.mjerna+i);
-            text(-texts, this.duzinaY/2-20, this.duzinaX/2+this.mjerna+i+2);
-
-            i += this.mjerna;
-            texts++;
+            line(305,300+this.mjerna/i+i,295,300+this.mjerna/i+i);
+            text(-texts, this.duzinaY/2-20, this.duzinaX/2+this.mjerna/i+i+2);
+            if (this.mjerna < 20) {
+              if (this.mjerna < 10) {
+                i += this.mjerna*4;
+                texts += 4;
+              }else {
+                i += this.mjerna*2;
+                texts += 2;
+              }
+            }else {
+              i += this.mjerna;
+              texts++;
+            }
         }
         if (bool){
             textSize(16);
@@ -95,7 +104,6 @@ class KoordinatniSistem {
           }
         }
       }
-      document.getElementById("gg").innerHTML = ` ${this.ime[this.brojac]} (`
     }
     tackaunos() {
       let XX = parseInt(document.getElementById("id1").value);
@@ -122,6 +130,7 @@ class KoordinatniSistem {
             line(300,300-y*this.mjerna,x*this.mjerna+300,y*-this.mjerna+300);
         }
         this.brojac += 1;
+        document.getElementById("gg").innerHTML = ` ${this.ime[this.brojac]} (`
     }
     krajnjaTacka(){
         strokeWeight(1.7);
