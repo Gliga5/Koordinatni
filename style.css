@@ -90,10 +90,12 @@ input[type=checkbox] {
     -webkit-transform: scale(2);
   }
   .abc .submitara {
-    padding: 5px 90px 5px 35px;
+    padding: 3px 90px 3px 35px;
+    font-size: 23px;
   }
   .abc .submitara2 {
-    padding: 5px 90px 5px 35px;
+    padding: 3px 90px 3px 35px;
+    font-size: 23px;
   }
   .ssa {
     padding-bottom: 5px;
@@ -106,8 +108,5 @@ input[type=checkbox] {
   }
   #gg1234 {
     font-size: 20px;
-  }
-  b {
-    padding-left: 440px;
   }
 }
