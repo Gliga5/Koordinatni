@@ -56,6 +56,15 @@ input[type=checkbox] {
   -webkit-transform: scale(1.3);
 }
 
+#id4 {
+  width: 70px;
+  font-size: 2vh;
+}
+
+.submitara2 {
+  padding: 2px 70px 2px 40px;
+}
+
 @media screen and (max-width: 600px) {
   body {
     align-items: baseline;
@@ -83,10 +92,22 @@ input[type=checkbox] {
   .abc .submitara {
     padding: 5px 90px 5px 35px;
   }
+  .abc .submitara2 {
+    padding: 5px 90px 5px 35px;
+  }
   .ssa {
     padding-bottom: 5px;
   }
   #id3 {
     font-size: 25px
+  }
+  #id4 {
+    font-size: 25px
+  }
+  #gg1234 {
+    font-size: 20px;
+  }
+  b {
+    padding-left: 440px;
   }
 }

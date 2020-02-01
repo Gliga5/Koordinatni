@@ -18,24 +18,30 @@
         <input placeholder="X" type="text" id="id1" />
         <label>,</label>
         <input placeholder="Y" type="text" id="id2" />
-        <label>)</label><br>
+        <label>)</label>
         <input class="submitara" type="button" value="Unesi" onclick="
         ks.tackaunos();
         document.getElementById('id1').value = '';
-        document.getElementById('id2').value = '';">
-        <hr>
+        document.getElementById('id2').value = '';"><br><br>
         <label>Povezi tacke?</label>
         <input type="checkbox" name="povezi" class="povezi" value="povezi" onmousedown="ks.tata*=-1;" />
           <select id="id3">
             <option value="1">Sve</option>
             <option value="2">Sve osim zadnje dvije tacke</option>
           </select>
-      </div>
+        <hr>
+        <label id="gg123">Linearna funkcija: y =</label>
+        <input placeholder="kx+n" type="text" id="id4" />
+        <input class="submitara2" type="button" value="Unesi" onclick="
+        ks.omojbozeunos();
+        document.getElementById('id4').value = '';">
+        <label id="gg1234">Npr. y = 3x+5 <b>(obavezno ovako)</b></label>
+    </div>
     </fieldset>
     <fieldset>
       <legend>Zoom</legend>
       <div>
-        <input type="range" id="myRange" value="30" min="5" max="60" step="0.1">
+        <input type="range" id="myRange" value="30" min="5" max="60" step="0.01">
       </div>
     </fieldset>
     <div>

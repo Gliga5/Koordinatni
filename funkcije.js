@@ -1,15 +1,22 @@
 class KoordinatniSistem {
     constructor(mjerna){
+        this.funkcijaV = [];
         this.tata = -1;
         this.mjerna = mjerna;
         this.duzinaX = width;
         this.duzinaY = height;
-        this.govno = [];
+        this.govno1 = [];
+        this.govno2 = [];
+        this.fx = [];
+        this.fy = [];
+        this.fX = [];
+        this.fY = [];
         this.x = [];
         this.y = [];
         this.X = [];
         this.Y = [];
         this.brojac = 0;
+        this.fbrojac = 0;
         this.ime = ["A","B","C","D","E","F","G"
         ,"I","J","K","L","M","N","P","Q","R"
         ,"S","T","U","V","W","X","Y","Z"];
@@ -65,7 +72,7 @@ class KoordinatniSistem {
             text("IV(+,-)",550,600-35);
         }
     }
-    mojText(x,y){
+    mojText(x,y,bool=false){
         let ix = 0;
         let iy = 0;
         if (x > 0 && y > 0) {
@@ -84,57 +91,74 @@ class KoordinatniSistem {
             ix = -20
             iy = 15
         }
-        text(`${this.ime[this.brojac]}(${x},${y})`,this.X[this.brojac]+ix,this.Y[this.brojac]-iy);
+        if (bool) {
+          text(`(${x},${y})`,this.fX[this.fbrojac]+ix,this.fY[this.fbrojac]-iy);
+        }else {
+          text(`${this.ime[this.brojac]}(${x},${y})`,this.X[this.brojac]+ix,this.Y[this.brojac]-iy);
+        }
     }
     zoom() {
       var range = document.getElementById("myRange");
       var abc = range.value
-      this.mjerna = parseInt(abc);
-      this.govno = (this.x).length
+      this.mjerna = parseFloat(abc);
+      this.govno1 = (this.x).length
+      this.govno2 = (this.fx).length
       this.brojac = 0;
-      if (this.govno > 0) {
-        for(let i = 0; i < this.govno; i++){
-          this.tacka(this.x[i],this.y[i]);
-          if (this.tata == 1) {
-            if (document.getElementById("id3").value == "1") {
-              ks.povezi(true);
-            }else {
-              ks.povezi(false);
-            }
+      this.fbrojac = 0;
+      for(let i = 0; i < this.govno1; i++) {
+        this.tacka(this.x[i],this.y[i]);
+        if (this.tata == 1) {
+          if (document.getElementById("id3").value == "1") {
+            ks.povezi(true);
+          }else {
+            ks.povezi(false);
           }
         }
       }
+      for(let z = 0; z < this.govno2; z++) {
+        this.tacka(this.fx[z],this.fy[z],true);
+      }
+      for(let s = 0; s < (this.fX).length; s+=2){
+        strokeWeight(1.7);
+        line(this.fX[s],this.fY[s],this.fX[s+1],this.fY[s+1]);
+      }
     }
-    tackaunos() {
-      let XX = parseInt(document.getElementById("id1").value);
-      let YY = parseInt(document.getElementById("id2").value);
+    tackaunos(){
+      let XX = parseFloat(document.getElementById("id1").value);
+      let YY = parseFloat(document.getElementById("id2").value);
       this.tacka(XX,YY);
     }
-    tacka(x,y,bool = true,funkcija=true){
+    tacka(x=0,y=0,funkcija=false){
         fill(0);
         textSize(13);
         textStyle(BOLD);
         textAlign(CENTER,CENTER);
         strokeWeight(2);
-        this.x[this.brojac] = x;
-        this.y[this.brojac] = y;
-        this.X[this.brojac] = x*this.mjerna+300;
-        this.Y[this.brojac] = y*-this.mjerna+300;
-        circle(this.X[this.brojac],this.Y[this.brojac],1);
-        if (bool) {
-            this.mojText(x,y);
+        if (funkcija) {
+          this.fx[this.fbrojac] = x;
+          this.fy[this.fbrojac] = y;
+          this.fX[this.fbrojac] = x*this.mjerna+300;
+          this.fY[this.fbrojac] = y*-this.mjerna+300;
+          circle(this.fX[this.fbrojac],this.fY[this.fbrojac],1.5);
+          this.mojText(x,y,true)
+          this.fbrojac += 1;
+        }else {
+          this.x[this.brojac] = x;
+          this.y[this.brojac] = y;
+          this.X[this.brojac] = x*this.mjerna+300;
+          this.Y[this.brojac] = y*-this.mjerna+300;
+          circle(this.X[this.brojac],this.Y[this.brojac],1);
+          this.mojText(x,y)
+          strokeWeight(0.4);
+          line(300+x*this.mjerna,height/2,x*this.mjerna+300,y*-this.mjerna+300);
+          line(300,300-y*this.mjerna,x*this.mjerna+300,y*-this.mjerna+300);
+          this.brojac += 1;
         }
-        if (funkcija){
-            strokeWeight(0.4);
-            line(300+x*this.mjerna,height/2,x*this.mjerna+300,y*-this.mjerna+300);
-            line(300,300-y*this.mjerna,x*this.mjerna+300,y*-this.mjerna+300);
-        }
-        this.brojac += 1;
         document.getElementById("gg").innerHTML = ` ${this.ime[this.brojac]} (`
     }
     krajnjaTacka(){
-        strokeWeight(1.7);
-        line(this.X[(this.X).length-1],this.Y[(this.X).length-1],this.X[0],this.Y[0])
+      strokeWeight(1.7);
+      line(this.X[(this.X).length-1],this.Y[(this.X).length-1],this.X[0],this.Y[0])
     }
     povezi(bool = false){
         strokeWeight(1.7);
@@ -144,5 +168,36 @@ class KoordinatniSistem {
         for(let i = 0; i < (this.X).length-1; i++){
             line(this.X[i],this.Y[i],this.X[i+1],this.Y[i+1]);
         }
+    }
+    omojbozeunos() {
+      this.omojboze(document.getElementById("id4").value,true);
+    }
+    omojboze(formula,bool) {
+      let multi = "";
+      let add = "";
+      for (var i = 0; i < formula.length; i++) {
+        if (formula[i] == "x") {
+          for (var z = 0; z < i; z++) {
+            multi += formula[z]
+          }
+          for (var s = i+1; s < formula.length; s++) {
+            add += formula[s]
+          }
+        }
+      }
+      if (multi == "") {
+        multi = 1;
+      }
+      if (add == "") {
+        add = "0";
+      }else if (add == "+" || add == "-") {
+        add = "0";
+      }
+      this.tacka(-70,((parseFloat(multi)) * -70) + parseFloat(add),true);
+      this.tacka(70,((parseFloat(multi)) * 70) + parseFloat(add),true);
+      if (bool) {
+        this.tacka(0,parseFloat(add),true);
+        this.tacka(-(parseFloat(add)/(parseFloat(multi))),0,true);
+      }
     }
 }
