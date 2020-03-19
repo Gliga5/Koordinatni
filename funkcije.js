@@ -15,6 +15,7 @@ class KoordinatniSistem {
         this.y = [];
         this.X = [];
         this.Y = [];
+        this.countforgood = 0
         this.brojac = 0;
         this.fbrojac = 0;
         this.ime = ["A","B","C","D","E","F","G"
@@ -92,9 +93,9 @@ class KoordinatniSistem {
             iy = 15
         }
         if (bool) {
-          text(`(${x},${y})`,this.fX[this.fbrojac]+ix,this.fY[this.fbrojac]-iy);
+          text(`(${Math.trunc(x*100)/100},${Math.trunc(y*100)/100})`,this.fX[this.fbrojac]+ix,this.fY[this.fbrojac]-iy);
         }else {
-          text(`${this.ime[this.brojac]}(${x},${y})`,this.X[this.brojac]+ix,this.Y[this.brojac]-iy);
+          text(`${this.ime[this.brojac]}(${Math.trunc(x*100)/100},${Math.trunc(y*100)/100})`,this.X[this.brojac]+ix,this.Y[this.brojac]-iy);
         }
     }
     zoom() {
@@ -199,5 +200,37 @@ class KoordinatniSistem {
         this.tacka(0,parseFloat(add),true);
         this.tacka(-(parseFloat(add)/(parseFloat(multi))),0,true);
       }
+    }
+    majkomoja(x1,x2,x3,x4,y1,y2,y3,y4){
+    	let uA = ((x4-x3)*(y1-y3) - (y4-y3)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
+		let uB = ((x2-x1)*(y1-y3) - (y2-y1)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
+		if (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1) {
+    		console.log(true);
+    		let intersectionX = x1 + (uA * (x2-x1));
+			let intersectionY = y1 + (uA * (y2-y1));
+			this.tacka(intersectionX,intersectionY,false)
+		}else{
+			console.log(false);
+		}
+    }
+    presjek(){
+    	let px = []
+    	let py = []
+    	let z = 0
+	   	for (var i = 0; i < this.fx.length; i+=4){
+	    	px[z] = this.fx[i]
+	    	py[z] = this.fy[i]
+	   		z++
+	    	px[z] = this.fx[i+1]
+	    	py[z] = this.fy[i+1]
+	    	z++
+	    }
+	    for (var i = 0; i < px.length; i+=2){
+	    	for (var b = 1; b < px.length; b+=2){
+	    		if (b > i) {
+					this.majkomoja(px[i],px[i+1],px[b+1],px[b+2],py[i],py[i+1],py[b+1],py[b+2])
+	    		}
+	    	}
+	    }
     }
 }
