@@ -2,6 +2,7 @@ class KoordinatniSistem {
     constructor(mjerna){
         this.funkcijaV = [];
         this.tata = -1;
+        this.mama = -1;
         this.mjerna = mjerna;
         this.duzinaX = width;
         this.duzinaY = height;
@@ -15,9 +16,16 @@ class KoordinatniSistem {
         this.y = [];
         this.X = [];
         this.Y = [];
-        this.countforgood = 0
+        this.presjekx = [];
+        this.presjeky = [];
+        this.presjekX = [];
+        this.presjekY = [];
+        this.countforgood = 0;
         this.brojac = 0;
         this.fbrojac = 0;
+        this.presjekbrojac = 0;
+        this.px = []
+    	this.py = []
         this.ime = ["A","B","C","D","E","F","G"
         ,"I","J","K","L","M","N","P","Q","R"
         ,"S","T","U","V","W","X","Y","Z"];
@@ -73,7 +81,7 @@ class KoordinatniSistem {
             text("IV(+,-)",550,600-35);
         }
     }
-    mojText(x,y,bool=false){
+    mojText(x,y,bool=false,bool2=false){
         let ix = 0;
         let iy = 0;
         if (x > 0 && y > 0) {
@@ -93,7 +101,11 @@ class KoordinatniSistem {
             iy = 15
         }
         if (bool) {
-          text(`(${Math.trunc(x*100)/100},${Math.trunc(y*100)/100})`,this.fX[this.fbrojac]+ix,this.fY[this.fbrojac]-iy);
+        	if (bool2){
+        		text(`(${Math.trunc(x*100)/100},${Math.trunc(y*100)/100})`,this.presjekX[this.presjekbrojac]+ix,this.presjekY[this.presjekbrojac]-iy);
+        	}else{
+				text(`(${Math.trunc(x*100)/100},${Math.trunc(y*100)/100})`,this.fX[this.fbrojac]+ix,this.fY[this.fbrojac]-iy);
+        	}
         }else {
           text(`${this.ime[this.brojac]}(${Math.trunc(x*100)/100},${Math.trunc(y*100)/100})`,this.X[this.brojac]+ix,this.Y[this.brojac]-iy);
         }
@@ -106,6 +118,7 @@ class KoordinatniSistem {
       this.govno2 = (this.fx).length
       this.brojac = 0;
       this.fbrojac = 0;
+      this.presjekbrojac = 0;
       for(let i = 0; i < this.govno1; i++) {
         this.tacka(this.x[i],this.y[i]);
         if (this.tata == 1) {
@@ -123,26 +136,41 @@ class KoordinatniSistem {
         strokeWeight(1.7);
         line(this.fX[s],this.fY[s],this.fX[s+1],this.fY[s+1]);
       }
+      if (this.mama == 1) {
+	      for(let l = 0; l < (this.presjekx).length; l++){
+	        this.tacka(this.presjekx[l],this.presjeky[l],true,true);
+	      }
+      }
     }
     tackaunos(){
       let XX = parseFloat(document.getElementById("id1").value);
       let YY = parseFloat(document.getElementById("id2").value);
       this.tacka(XX,YY);
     }
-    tacka(x=0,y=0,funkcija=false){
+    tacka(x=0,y=0,funkcija=false,presjek=false){
         fill(0);
         textSize(13);
         textStyle(BOLD);
         textAlign(CENTER,CENTER);
         strokeWeight(2);
         if (funkcija) {
-          this.fx[this.fbrojac] = x;
-          this.fy[this.fbrojac] = y;
-          this.fX[this.fbrojac] = x*this.mjerna+300;
-          this.fY[this.fbrojac] = y*-this.mjerna+300;
-          circle(this.fX[this.fbrojac],this.fY[this.fbrojac],1.5);
-          this.mojText(x,y,true)
-          this.fbrojac += 1;
+        	if (presjek){
+				this.presjekx[this.presjekbrojac] = x;
+	          	this.presjeky[this.presjekbrojac] = y;
+	          	this.presjekX[this.presjekbrojac] = x*this.mjerna+300;
+	          	this.presjekY[this.presjekbrojac] = y*-this.mjerna+300;
+	          	circle(this.presjekX[this.presjekbrojac],this.presjekY[this.presjekbrojac],1.5);
+	          	this.mojText(x,y,true,true)
+	          	this.presjekbrojac += 1;
+        	}else{
+          		this.fx[this.fbrojac] = x;
+	          	this.fy[this.fbrojac] = y;
+	          	this.fX[this.fbrojac] = x*this.mjerna+300;
+	          	this.fY[this.fbrojac] = y*-this.mjerna+300;
+	          	circle(this.fX[this.fbrojac],this.fY[this.fbrojac],1.5);
+	          	this.mojText(x,y,true)
+	          	this.fbrojac += 1;
+        	}
         }else {
           this.x[this.brojac] = x;
           this.y[this.brojac] = y;
@@ -208,27 +236,42 @@ class KoordinatniSistem {
     		console.log(true);
     		let intersectionX = x1 + (uA * (x2-x1));
 			let intersectionY = y1 + (uA * (y2-y1));
-			this.tacka(intersectionX,intersectionY,false)
+			let govno3 = this.presjekbrojac+1
+			let permisija = 0
+			for (var i = 0; i < govno3;i++) {
+				if (intersectionX == this.presjekx[i] && intersectionY == this.presjeky[i]){
+					permisija++
+				}
+			}
+			if (permisija == 0){
+				this.tacka(intersectionX,intersectionY,true,true)
+			}
 		}else{
 			console.log(false);
 		}
     }
+    presjekunos(){
+    	this.mama *= -1;
+    	if (document.getElementById("id5").checked != true) {
+    		this.presjek()
+    	}
+    }
     presjek(){
-    	let px = []
-    	let py = []
+    	this.px = []
+    	this.py = []
     	let z = 0
 	   	for (var i = 0; i < this.fx.length; i+=4){
-	    	px[z] = this.fx[i]
-	    	py[z] = this.fy[i]
+	    	this.px[z] = this.fx[i]
+	    	this.py[z] = this.fy[i]
 	   		z++
-	    	px[z] = this.fx[i+1]
-	    	py[z] = this.fy[i+1]
+	    	this.px[z] = this.fx[i+1]
+	    	this.py[z] = this.fy[i+1]
 	    	z++
 	    }
-	    for (var i = 0; i < px.length; i+=2){
-	    	for (var b = 1; b < px.length; b+=2){
+	    for (var i = 0; i < this.px.length; i+=2){
+	    	for (var b = 1; b < this.px.length; b+=2){
 	    		if (b > i) {
-					this.majkomoja(px[i],px[i+1],px[b+1],px[b+2],py[i],py[i+1],py[b+1],py[b+2])
+					this.majkomoja(this.px[i],this.px[i+1],this.px[b+1],this.px[b+2],this.py[i],this.py[i+1],this.py[b+1],this.py[b+2])
 	    		}
 	    	}
 	    }
