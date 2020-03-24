@@ -236,7 +236,7 @@ class KoordinatniSistem {
     		console.log(true);
     		let intersectionX = x1 + (uA * (x2-x1));
 			let intersectionY = y1 + (uA * (y2-y1));
-			let govno3 = this.presjekbrojac+1
+			let govno3 = this.presjekbrojac
 			let permisija = 0
 			for (var i = 0; i < govno3;i++) {
 				if (intersectionX == this.presjekx[i] && intersectionY == this.presjeky[i]){
