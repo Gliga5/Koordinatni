@@ -193,9 +193,13 @@ class KoordinatniSistem {
         strokeWeight(1.7);
         if (bool){
             this.krajnjaTacka();
+            if ((this.X).length > 2) {
+            	this.mojdist(this.X[this.govno1-1],this.Y[this.govno1-1],this.X[0],this.Y[0])
+            }
         }
         for(let i = 0; i < (this.X).length-1; i++){
             line(this.X[i],this.Y[i],this.X[i+1],this.Y[i+1]);
+      		this.mojdist(this.X[i],this.Y[i],this.X[i+1],this.Y[i+1])
         }
     }
     omojbozeunos() {
@@ -228,6 +232,14 @@ class KoordinatniSistem {
         this.tacka(0,parseFloat(add),true);
         this.tacka(-(parseFloat(add)/(parseFloat(multi))),0,true);
       }
+    }
+    mojdist(x1,y1,x2,y2){
+    	let d = round(dist(x1 / this.mjerna, y1 / this.mjerna, x2 / this.mjerna, y2 / this.mjerna) * 100) / 100;
+    	push();
+  		translate((x1 + x2) / 2, (y1 + y2) / 2);
+  		rotate(atan2(y2 - y1, x2 - x1));
+  		text(d, 0, -5);
+  		pop();
     }
     majkomoja(x1,x2,x3,x4,y1,y2,y3,y4){
     	let uA = ((x4-x3)*(y1-y3) - (y4-y3)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
